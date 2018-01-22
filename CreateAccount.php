@@ -1,42 +1,45 @@
 <?php
 require ('databasevaribles.php');
-//This Script Will Create a Traditional User Account.
+// This Script Will Create a Traditional User Account.
 
 $username = $_POST['username'];
 $password = $_POST['password'];
 $email = $_POST['email'];
-$name = $_POST['name'];
+$first_name = $_POST['first_name'];
+$last_name = $_POST['last_name'];
 
-if (!isset($username)) {
+if (empty($username)) {
     $response['success'] = FALSE;
-    $response['debug'] = "A ssername must be entered!";
+    $response['debug'] = "A username must be entered!";
     echo json_encode($response);
     die();
 }
 
-if (!isset($password)) {
+if (empty($password)) {
     $response['success'] = FALSE;
     $response['debug'] = "A password must be entered!";
     echo json_encode($response);
     die();
 }
 
-if (!isset($email)) {
+if (empty($email)) {
     $response['success'] = FALSE;
     $response['debug'] = "An email must be entered!";
     echo json_encode($response);
     die();
 }
 
-if (!isset($firstName)) {
+if (empty($first_name) || empty($last_name)) {
     $response['success'] = FALSE;
     $response['debug'] = "A name must be entered!";
     echo json_encode($response);
     die();
 }
 
-//Connect To MYSQL
-$conn = mysqli_connect($dbhostname, $dbusername, $dbpassword)
+
+
+// Connect To MYSQL
+$conn = mysqli_connect($dbhostname, $dbusername, $dbpassword);
 
 // If we can't connect to the database exit.
 if (!isset($conn)) {
@@ -46,7 +49,7 @@ if (!isset($conn)) {
     die();
 }
 
-//Select Correct Database
+// Select Correct Database
 if (!mysqli_select_db($conn,$dbname)) {
     $response['success'] = FALSE;
     $response['debug'] = "Unable to connect to database";
@@ -55,13 +58,14 @@ if (!mysqli_select_db($conn,$dbname)) {
 }
 
 // Escape the input passed in by the user
-$username = mysqli_real_escape_string($conn,$username);
-$password = mysqli_real_escape_string($conn,$password);
-$email = mysqli_real_escape_string($conn,$email);
-$firstName = mysqli_real_escape_string($conn,$firstName);
+$username = mysqli_real_escape_string($conn, $username);
+$password = mysqli_real_escape_string($conn, $password);
+$email = mysqli_real_escape_string($conn, $email);
+$first_name = mysqli_real_escape_string($conn, $first_name);
+$last_name = mysqli_real_escape_string($conn, $last_name);
 
-//Check To Make Sure The Username Is Unique
-$UniqueUsernameQuery = mysqli_query($conn,"SELECT * FROM users WHERE username = '$username '");
+// Check To Make Sure The Username Is Unique
+$UniqueUsernameQuery = mysqli_query($conn,"SELECT * FROM users WHERE username = '$username'");
 $numrows = mysqli_num_rows($UniqueUsernameQuery);
 if ($numrows != 0) {
     $response['success'] = FALSE;
@@ -98,7 +102,7 @@ while ($numrows != 0) {
         $response['success'] = FALSE;
         $response['uniqueUser'] = TRUE;
         $response['uniqueEmail'] = TRUE;
-        $response['debug'] = "UserID generation failed. ".mysql_error();
+        $response['debug'] = "UserID generation failed. ".mysqli_error($conn);
         echo json_encode($response);
         die();
     }
@@ -110,21 +114,21 @@ $password = password_hash($password,PASSWORD_BCRYPT, array(
 ));
 
 // Insert The Data Into The Server
-$InsertDataQuery=mysqli_query($conn,"INSERT INTO users (userid,username, first_name, password,email) VALUES ('$UserID','$username', '$firstName','$password', '$email')");
+$InsertDataQuery = mysqli_query($conn,"INSERT INTO users (userid, username, first_name, last_name, password, email, private_key, key_creation_time) VALUES ('$UserID', '$username', '$first_name', '$last_name', '$password', '$email', '', '')");
 if (!$InsertDataQuery) {
+
     $response['success'] = FALSE;
     $response['uniqueUser'] = TRUE;
     $response['uniqueEmail'] = TRUE;
-    $response['debug'] = "Unable to create user account. ".mysql_error();
+    $response['debug'] = "Unable to create user account. ".mysqli_error($conn);
     echo json_encode($response);
     die();
 }
 
-// TODO: Maybe send an Email Conformation To Activate The Account
+// TODO: Maybe send an Email Comformation To Activate The Account
 
 $response['success'] = TRUE;
 $response['uniqueUser'] = TRUE;
 $response['uniqueEmail'] = TRUE;
 echo json_encode($response);
-
 ?>
