@@ -1,0 +1,3 @@
+[submodule "AtLAS-branding"]
+	path = AtLAS-branding
+	url = https://github.com/AtLAS-WVU/AtLAS-branding.git
