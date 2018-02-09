@@ -56,7 +56,7 @@ $row = mysqli_fetch_assoc($result);
 $userID = $row['userid'];
 
 // Query to get the user's friends from the DB
-$query = "SELECT IF(user_1 = '$userID', user_2, user_1) as username_of_friend, friendship_status, friendship_date, username FROM friend_connection INNER JOIN users ON userid = IF(user_1 = '$userID', user_2, user_1) WHERE user_1 = '$userID' OR user_2 = '$userID'";
+$query = "SELECT IF(user_1 = '$userID', user_2, user_1) as username_of_friend, friendship_status, friendship_date, username, first_name, last_name FROM friend_connection INNER JOIN users ON userid = IF(user_1 = '$userID', user_2, user_1) WHERE user_1 = '$userID' OR user_2 = '$userID'";
 
 $result = mysqli_query($conn, $query);
 
@@ -77,7 +77,7 @@ if (!$result) {
     // Username found. Return the user inforamtion
     $friend_connections = array();
     while($row = mysqli_fetch_assoc($result)) {
-        $friend_connections[] = array("username"=> $row['username'], "status"=>$row['friendship_status'], "date"=>$row['friendship_date']);
+        $friend_connections[] = array("username"=> $row['username'], "first_name"=> $row['first_name'], "last_name"=> $row['last_name'], "status"=>$row['friendship_status'], "date"=>$row['friendship_date']);
     }
     $response['success'] = TRUE;
     $response['connections'] = $friend_connections;
