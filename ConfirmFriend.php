@@ -1,6 +1,5 @@
 <?php
 require ('databasevaribles.php');
-// This Script Will Create a Traditional User Account.
 
 $username = $_POST['username'];
 $friends_username = $_POST['friend_username'];
@@ -97,9 +96,11 @@ $friend_status = 'friend';
 date_default_timezone_set('UTC');
 $date = date("F j, Y, g:i a");
 
-// The only user that can confirm the friendship is the user listed in the user_1 column.
-// The user in the user_2 column is the one that sent the request.
-$result = mysqli_query($conn, "UPDATE friend_connection SET friendship_status='$friend_status', friendship_date='$date' WHERE user_1 = '$userID' AND user_2 = '$FriendsUserID' AND NOT friendship_status = '$friend_status'");
+// The only user that confirm this firendship is the one listed in user_2 field.
+// The user listed in the user_1 field is the user to sent (requested) the friend connection.
+// Since the confirming user will be performing the request, their ID will be listed in the userID field.
+// Then the userID field needs to be checked againsted the user_2 field.
+$result = mysqli_query($conn, "UPDATE friend_connection SET friendship_status='$friend_status', friendship_date='$date' WHERE user_1 = '$FriendsUserID' AND user_2 = '$userID' AND NOT friendship_status = '$friend_status'");
 
 if (!$result) {
     // MYSQL Error

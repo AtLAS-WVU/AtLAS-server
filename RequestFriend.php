@@ -113,7 +113,7 @@ $friend_status = 'pending';
 date_default_timezone_set('UTC');
 $date = date("F j, Y, g:i a");
 
-// Add the pending request to the DB. The requster's user ID will be placed in user_1 field
+// Add the pending request to the DB. The requster's user ID will be placed in user_1 field and the recipient will be in user_2
 $add_query = "INSERT INTO friend_connection (user_1, user_2, friendship_status, friendship_date) VALUES ('$userID', '$FriendsUserID', '$friend_status', '$date')";
 $result = mysqli_query($conn, $add_query);
 
