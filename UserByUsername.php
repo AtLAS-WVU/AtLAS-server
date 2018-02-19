@@ -69,7 +69,7 @@ $row = mysqli_fetch_assoc($result);
 $userID = $row['userid'];
 
 // Get the friend's userID
-$result = mysqli_query($conn, "SELECT userid FROM users WHERE username = '$friends_username'");
+$result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$friends_username'");
 
 if (!$result) {
     // MYSQL Error
@@ -83,29 +83,13 @@ if (!$result) {
     $response['debug'] = "Unable to find friend's ID";
     echo json_encode($response);
     die();
-}
-
-$row = mysqli_fetch_assoc($result);
-$FriendsUserID = $row['userid'];
-
-// Query to get the user information from the DB
-$result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
-if (!$result) {
-    // MYSQL Error
-    $response['success'] = FALSE;
-    $response['debug'] = "MYSQL query failed: ".mysqli_error($conn);
-    echo json_encode($response);
-    die();
-} else if (mysqli_num_rows($result) == 0) {
-    // Username not found in the DB
-    $response['success'] = FALSE;
-    $response['debug'] = "Username not found";
-    echo json_encode($response);
-    die();
 } else {
+    $row = mysqli_fetch_assoc($result);
+    $FriendsUserID = $row['userid'];
+
     // Username found. Return the user inforamtion
 
-    //Get the user's friendship status with the other user
+    // Get the user's friendship status with the other user
     $FriendCheckResult = mysqli_query($conn, "SELECT friendship_status, friendship_date FROM friend_connection WHERE (user_1 = '$userID' AND user_2 = '$FriendsUserID') OR (user_1 = '$FriendsUserID' AND user_2 = '$userID')");
     $FriendCheckRow = mysqli_fetch_assoc($FriendCheckResult);
 
@@ -117,19 +101,16 @@ if (!$result) {
         die();
     }
 
-    $row = mysqli_fetch_assoc($result);
-
     $response['success'] = TRUE;
     $response['first_name'] = $row['first_name'];
     $response['last_name'] = $row['last_name'];
+
     if (is_null($FriendCheckRow['friendship_status'])){
         $response['friend_status'] = "stranger";
-        //TODO:  Get this working
     } else {
         $response['friend_status'] = $FriendCheckRow['friendship_status'];
     }
     $response['friend_date'] = $FriendCheckRow['friendship_date'];
-
 }
 echo json_encode($response);
 ?>
