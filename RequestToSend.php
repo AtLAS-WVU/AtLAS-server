@@ -175,7 +175,7 @@ while ($numrows != 0) {
 date_default_timezone_set('UTC');
 $date = date("F j, Y, g:i a");
 
-$add_query = "INSERT INTO requests (requestID, senderID, revceiverID, packageMessage, requestTime) VALUES ('$RequestID', '$username', '$friends_username', '$message', '$date')";
+$add_query = "INSERT INTO requests (requestID, senderID, revceiverID, packageMessage, requestTime) VALUES ('$RequestID', '$UserID', '$FriendsUserID', '$message', '$date')";
 $result = mysqli_query($conn, $add_query);
 
 if (!$result) {
