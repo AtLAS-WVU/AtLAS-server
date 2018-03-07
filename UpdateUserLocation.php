@@ -76,7 +76,7 @@ $userID = $row['userid'];
 // Generate a date/time stamp
 $friend_status = 'pending';
 date_default_timezone_set('UTC');
-$date = date("F j, Y, g:i a");
+$date = date("F j, Y, g:i:s a");
 
 // Add a new entry to the database with the current location of the user
 $add_query = "INSERT INTO user_current_locations (user_id, longitude, latitude, time_stamp) VALUES ('$userID', '$longitude', '$latitdue', '$date')";
