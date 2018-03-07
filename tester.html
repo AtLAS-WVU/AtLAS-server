@@ -6,23 +6,24 @@
 </head>
 
 <body>
-<form action="PendingRequests.php" method="get" name="form1" id="form1">
+<form action="UpdateUserLocation.php" method="POST" name="form1" id="form1">
   <p>Username:
     <input type="text" name="username" id="username">
   </p>
-  <!--
-    <input type="text" name="friend_username" id="friend_username">-->
 
-    <label for="password">Password:</label>
+    <!--<input type="text" name="friend_username" id="friend_username">-->
+
+    <label for="token">Token:</label>
     <input type="text" name="token" id="token">
- <!--
-    <label for="password">RequestID:</label>
-    <input type="text" name="requestID" id="requestID">
-  -->
+
+    <label for="latitdue">Lat:</label>
+    <input type="text" name="latitdue" id="latitdue">
+
+    <label for="longitude">Long:</label>
+    <input type="text" name="longitude" id="longitude">
     <!--
-    <input type="text" name="last_name" id="password">
-    <input type="text" name="first_name" id="password">
-  -->
+    <input type="text" name="first_name" id="password">-->
+
   </p>
   <p>
     <input type="submit" name="submit" id="submit" value="Submit">
