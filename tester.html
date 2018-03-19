@@ -6,16 +6,17 @@
 </head>
 
 <body>
-<form action="UpdateDroneStatus.php" method="post" name="form1" id="form1">
+<form action="GetDroneLocation.php" method="post" name="form1" id="form1">
+  <!--
   <p>drone_id:
     <input type="text" name="drone_id" id="drone_id">
-  </p>
+  </p> -->
 
     <!--<input type="text" name="friend_username" id="friend_username">-->
 
-    <label for="token">drone_private_key:</label>
-    <input type="text" name="drone_private_key" id="drone_private_key">
-
+    <label for="username">username:</label>
+    <input type="text" name="username" id="username">
+    <!--
     <label for="latitdue">Lat:</label>
     <input type="text" name="latitude" id="latitude">
 
@@ -26,12 +27,12 @@
 
     <label for="longitude">altitude:</label>
     <input type="text" name="altitude" id="altitude">
+    -->
+    <label for="token">token:</label>
+    <input type="text" name="token" id="token">
 
-    <label for="longitude">speed:</label>
-    <input type="text" name="speed" id="speed">
-
-    <label for="longitude">current_stage_of_delivery:</label>
-    <input type="text" name="current_stage_of_delivery" id="current_stage_of_delivery">
+    <label for="delivery_id">delivery_id:</label>
+    <input type="text" name="delivery_id" id="delivery_id">
 
 
 
