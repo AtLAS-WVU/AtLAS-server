@@ -6,23 +6,34 @@
 </head>
 
 <body>
-<form action="GetDeliveries.php" method="get" name="form1" id="form1">
-  <p>Username:
-    <input type="text" name="username" id="username">
+<form action="UpdateDroneStatus.php" method="post" name="form1" id="form1">
+  <p>drone_id:
+    <input type="text" name="drone_id" id="drone_id">
   </p>
 
     <!--<input type="text" name="friend_username" id="friend_username">-->
 
-    <label for="token">Token:</label>
-    <input type="text" name="token" id="token">
-<!--
+    <label for="token">drone_private_key:</label>
+    <input type="text" name="drone_private_key" id="drone_private_key">
+
     <label for="latitdue">Lat:</label>
-    <input type="text" name="latitdue" id="latitdue">
+    <input type="text" name="latitude" id="latitude">
 
     <label for="longitude">Long:</label>
-    <input type="text" name="longitude" id="longitude">-->
-    <!--
-    <input type="text" name="first_name" id="password">-->
+    <input type="text" name="longitude" id="longitude">
+    current_battery_life
+    <input type="text" name="current_battery_life" id="current_battery_life">
+
+    <label for="longitude">altitude:</label>
+    <input type="text" name="altitude" id="altitude">
+
+    <label for="longitude">speed:</label>
+    <input type="text" name="speed" id="speed">
+
+    <label for="longitude">current_stage_of_delivery:</label>
+    <input type="text" name="current_stage_of_delivery" id="current_stage_of_delivery">
+
+
 
   </p>
   <p>
