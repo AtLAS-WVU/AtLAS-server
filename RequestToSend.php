@@ -101,7 +101,7 @@ $row = mysqli_fetch_assoc($result);
 $FriendsUserID = $row['userid'];
 
 // Check to make sure that these two people are friends
-$FriendCheckQuery = "SELECT friendship_status FROM friend_connection WHERE (user_1 = '$userID' AND user_2 = '$FriendsUserID') OR (user_1 = '$FriendsUserID' AND user_2 = '$UserID')";
+$FriendCheckQuery = "SELECT friendship_status FROM friend_connection WHERE (user_1 = '$userID' AND user_2 = '$FriendsUserID') OR (user_1 = '$FriendsUserID' AND user_2 = '$userID')";
 $result = mysqli_query($conn, $FriendCheckQuery);
 if (!$result) {
     // MYSQL Error
@@ -112,7 +112,7 @@ if (!$result) {
 } else if (mysqli_num_rows($result) == 0) {
     // User's token doesn't match
     $response['success'] = FALSE;
-    $response['debug'] = "You are not friends with the person you want to deliver the message to";
+    $response['debug'] = "You are not friends with person you are trying to send package too";
     echo json_encode($response);
     die();
 }
@@ -169,13 +169,11 @@ while ($numrows != 0) {
     $numrows = mysqli_num_rows($result);
 }
 
-
-
 // Generate a date/time stamp
 date_default_timezone_set('UTC');
 $date = date("F j, Y, g:i a");
 
-$add_query = "INSERT INTO requests (requestID, senderID, revceiverID, packageMessage, requestTime) VALUES ('$RequestID', '$UserID', '$FriendsUserID', '$message', '$date')";
+$add_query = "INSERT INTO requests (requestID, senderID, revceiverID, packageMessage, requestTime) VALUES ('$RequestID', '$userID', '$FriendsUserID', '$message', '$date')";
 $result = mysqli_query($conn, $add_query);
 
 if (!$result) {
