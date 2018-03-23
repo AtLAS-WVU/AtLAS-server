@@ -130,7 +130,7 @@ if (!$result) {
             $SenderUsername = $username;
         }
 
-        $pending_requests[] = array("sender_username"=> $SenderUsername, "receiver_username"=> $ReceiverUserName, "can_we_approve"=> $ApproveRequest, "delivery_message"=>$row['packageMessage'], "request_date"=>$row['requestTime']);
+        $pending_requests[] = array("requestID"=>$row['requestID'], "sender_username"=> $SenderUsername, "receiver_username"=> $ReceiverUserName, "can_we_approve"=> $ApproveRequest, "delivery_message"=>$row['packageMessage'], "request_date"=>$row['requestTime']);
     }
     $response['success'] = TRUE;
     $response['pending_requests'] = $pending_requests;
