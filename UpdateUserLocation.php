@@ -4,7 +4,7 @@ require ('databasevaribles.php');
 $username = $_POST['username'];
 $token = $_POST['token'];
 $longitude = $_POST['longitude'];
-$latitdue = $_POST['latitdue'];
+$latitude = $_POST['latitude'];
 
 if (empty($username)) {
     $response['success'] = FALSE;
@@ -20,7 +20,7 @@ if (empty($token)) {
     die();
 }
 
-if (empty($longitude) || empty($latitdue)) {
+if (empty($longitude) || empty($latitude)) {
     $response['success'] = FALSE;
     $response['debug'] = "An longitude and latitude must be entered!";
     echo json_encode($response);
@@ -50,7 +50,7 @@ if (!mysqli_select_db($conn,$dbname)) {
 $username = mysqli_real_escape_string($conn, $username);
 $token = mysqli_real_escape_string($conn, $token);
 $longitude = mysqli_real_escape_string($conn, $longitude);
-$latitdue = mysqli_real_escape_string($conn, $latitdue);
+$latitude = mysqli_real_escape_string($conn, $latitude);
 
 // Confirm that the token requested is correct
 $result = mysqli_query($conn, "SELECT userid FROM users WHERE username = '$username' AND private_key = '$token'");
@@ -79,7 +79,7 @@ date_default_timezone_set('UTC');
 $date = date("F j, Y, g:i:s a");
 
 // Add a new entry to the database with the current location of the user
-$add_query = "INSERT INTO user_current_locations (user_id, longitude, latitude, time_stamp) VALUES ('$userID', '$longitude', '$latitdue', '$date')";
+$add_query = "INSERT INTO user_current_locations (user_id, longitude, latitude, time_stamp) VALUES ('$userID', '$longitude', '$latitude', '$date')";
 $result = mysqli_query($conn, $add_query);
 
 if (!$result) {
