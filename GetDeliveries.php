@@ -131,6 +131,7 @@ if (!$result) {
         }
 
         $pending_requests[] = array(
+            "delivery_id" => $row['delivery_id'],
             "sender_username"=> $SenderUsername,
             "receiver_username"=> $ReceiverUserName,
             "waiting_for_us"=> $ApproveRequest,

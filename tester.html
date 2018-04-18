@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<form action="GetDroneLocation.php" method="post" name="form1" id="form1">
+<form action="GetDeliveries.php" method="get" name="form1" id="form1">
   <!--
   <p>drone_id:
     <input type="text" name="drone_id" id="drone_id">
@@ -14,20 +14,23 @@
 
     <!--<input type="text" name="friend_username" id="friend_username">-->
 
-    <label for="username">username:</label>
+    <label for="username">Username:</label>
     <input type="text" name="username" id="username">
+
     <!--
-    <label for="latitdue">Lat:</label>
-    <input type="text" name="latitude" id="latitude">
+    <label for="friend_username">Friend USername:</label>
+    <input type="text" name="friend_username" id="friend_username">-->
 
-    <label for="longitude">Long:</label>
-    <input type="text" name="longitude" id="longitude">
-    current_battery_life
-    <input type="text" name="current_battery_life" id="current_battery_life">
+    <label for="token">token:</label>
+    <input type="text" name="token" id="token">
 
+    <!--
+    Message
+    <input type="text" name="delivery_message" id="delivery_message">-->
+    <!--
     <label for="longitude">altitude:</label>
     <input type="text" name="altitude" id="altitude">
-    -->
+
     <label for="token">token:</label>
     <input type="text" name="token" id="token">
 
@@ -35,7 +38,7 @@
     <input type="text" name="delivery_id" id="delivery_id">
 
 
-
+    -->
   </p>
   <p>
     <input type="submit" name="submit" id="submit" value="Submit">
