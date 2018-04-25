@@ -68,9 +68,49 @@ if (!$result) {
     die();
 }
 
-// Return a dummy response
+// First check to make sure that the drone ID past is part of a current delivery
+$CurrentDeliveryQuery = "SELECT * FROM deliveries INNER JOIN drone_status ON (deliveries.drone_id = drone_status.drone_id) WHERE NOT delivery_status = 'delivered'";
+$result = mysqli_query($conn, $CurrentDeliveryQuery);
+
+if (!$result) {
+    // MYSQL Error
+    $response['success'] = FALSE;
+    $response['debug'] = "MYSQL query failed: ".mysqli_error($conn);
+    echo json_encode($response);
+    die();
+} else if (mysqli_num_rows($result) == 0) {
+    // No current deliveries that the drone is part of
+    $response['success'] = FALSE;
+    $response['debug'] = "Drone is not part of current delivery";
+    echo json_encode($response);
+    die();
+}
+$row = mysqli_fetch_assoc($result);
+$ReceiverId = $row["receiver_id"];
+
+// Get the current package recivers position.
+// TODO: At some point we will need to add code to know that we need to return the drone back to the reciever
+
+$ReceiverIdQuery = "SELECT * FROM user_current_locations WHERE user_id ='$ReceiverId' ORDER BY time_stamp DESC LIMIT 1";
+$ReceiverIdQueryResult = mysqli_query($conn, $ReceiverIdQuery);
+
+if (!$ReceiverIdQueryResult) {
+    // MYSQL Error
+    $response['success'] = FALSE;
+    $response['debug'] = "MYSQL query failed: ".mysqli_error($conn);
+    echo json_encode($response);
+    die();
+} else if (mysqli_num_rows($ReceiverIdQueryResult) == 0) {
+    // No current deliveries that the drone is part of
+    $response['success'] = FALSE;
+    $response['debug'] = "No location data for the selected user";
+    echo json_encode($response);
+    die();
+}
+$row = mysqli_fetch_assoc($ReceiverIdQueryResult);
+
 $response['success'] = TRUE;
-$response['waypoint'] = array('longitude' => 39.6295, 'latitude'=> 79.9559, 'altitude'=> 15);
+$response['waypoint'] = array('longitude' => $row["longitude"], 'latitude'=> $row["latitude"], 'altitude'=> 0); // Altitude will be determine by the drone, this field is here so in the future can navigate the drone over things
 echo json_encode($response);
 die();
 
