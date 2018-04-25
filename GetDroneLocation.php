@@ -74,7 +74,7 @@ $row = mysqli_fetch_assoc($result);
 $userID = $row['userid'];
 
 // Select the delivery and get the current location of the drone
-$GetLocationQuery = "SELECT * FROM deliveries INNER JOIN drone_status ON (deliveries.drone_id = drone_status.drone_id) WHERE delivery_id = '$delivery_id'";
+$GetLocationQuery = "SELECT * FROM deliveries INNER JOIN drone_status ON (deliveries.drone_id = drone_status.drone_id) WHERE delivery_id = '$delivery_id' AND (deliveries.sender_id = '$userID' OR deliveries.receiver_id='$userID')";
 $LocationQueryResult = mysqli_query($conn, $GetLocationQuery);
 
 if (!$LocationQueryResult) {
